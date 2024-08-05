@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { ICard, IColumn } from "./slots.types";
+
 const props = defineProps({
   data: Object,
 });

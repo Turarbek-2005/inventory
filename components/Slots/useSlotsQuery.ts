@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/vue-query";
 import { COLLECTION_OBJECTS, DB_ID } from "~/app.constants";
 import { KANBAN_DATA } from "./slots.data";
-import type { IColumn } from "./slots.types";
+import type { IColumn, ICard } from "./slots.types";
 
 export function useSlotsQuery() {
   return useQuery({
