@@ -11,7 +11,7 @@ const item = props.data?.item;
 </script>
 <template>
   <div class="slot" @click="store.set(item)">
-    <NuxtImg :src="item?.image" width="85" />
+    <NuxtImg v-if="item?.image" :src="item?.image" width="85" />
     <label v-if="item" class="quantity">{{ item?.quantity }}</label>
   </div>
 </template>
