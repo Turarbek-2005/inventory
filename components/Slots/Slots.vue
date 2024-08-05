@@ -14,8 +14,8 @@ type TypeMutationVaraiables = {
 
 const { mutate } = useMutation({
   mutationKey: ["move card"],
-  mutationFn: ({ docId, slot }: TypeMutationVaraiables) =>
-    DB.updateDocument(DB_ID, COLLECTION_OBJECTS, docId, {
+  mutationFn: async ({ docId, slot }: TypeMutationVaraiables) =>
+    await DB.updateDocument(DB_ID, COLLECTION_OBJECTS, docId, {
       slot,
     }),
   onSuccess: () => {

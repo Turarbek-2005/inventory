@@ -2,14 +2,10 @@
 import { useMutation } from "@tanstack/vue-query";
 import { COLLECTION_OBJECTS, DB_ID } from "~/app.constants";
 import { useSlotSlideStore } from "~/store/slot-slide.store";
+import { useSlideChangeStore } from "~/store/slide-change.store";
 
 const store = useSlotSlideStore();
-const isLocalOpen = computed({
-  get: () => store.isOpen,
-  set: (value) => {
-    store.isOpen = value;
-  },
-});
+const storeChange = useSlideChangeStore();
 
 const { mutate } = useMutation({
   mutationKey: ["move card"],
@@ -25,29 +21,38 @@ function deleteItem(id: string | undefined) {
 }
 </script>
 <template>
-  <div :class="{ slider: true, open: store.isOpen, none: !store.card }">
-    <Icon
-      name="material-symbols:close-rounded"
-      size="30"
-      class="exit"
-      @click="store.toggle()"
-    />
-    <div class="img">
-      <NuxtImg :src="store.card?.image" class="image" />
+  <div
+    :class="{ slider__wrapper: true, open: store.isOpen, none: !store.card }"
+  >
+    <div class="slider">
+      <Icon
+        name="material-symbols:close-rounded"
+        size="30"
+        class="exit"
+        @click="store.toggle()"
+      />
+      <div class="img">
+        <NuxtImg :src="store.card?.image" class="image" />
+      </div>
+      <div class="text">
+        <h3 class="title">{{ store.card?.name }}</h3>
+        <p class="subtitle">{{ store.card?.description }}</p>
+        <p>Количество: {{ store.card?.quantity }}</p>
+        <button class="change" @click="storeChange.set(store?.card)">
+          Изменить количество
+        </button>
+      </div>
+      <button class="delete" @click="deleteItem(store.card?.id)">
+        Удалить предмет
+      </button>
+      <SlotsSliderChange />
     </div>
-    <div class="text">
-      <h3 class="title">{{ store.card?.name }}</h3>
-      <p class="subtitle">{{ store.card?.description }}</p>
-    </div>
-    <button class="delete" @click="deleteItem(store.card?.id)">
-      Удалить предмет
-    </button>
   </div>
 </template>
 <style lang="scss" scoped>
 @import "~/assets/scss/colors.scss";
 
-.slider {
+.slider__wrapper {
   position: absolute;
   height: 100%;
   width: 45%;
@@ -55,7 +60,13 @@ function deleteItem(id: string | undefined) {
   border: 1px solid $borderColor;
   transition: right 0.3s ease-in-out;
   right: -45%;
+}
+
+.slider {
+  position: relative;
   padding: 15px;
+  height: 100%;
+  width: 100%;
 }
 
 .open {
@@ -87,16 +98,24 @@ function deleteItem(id: string | undefined) {
 .text {
   border-top: 1px solid $borderColor;
   border-bottom: 1px solid $borderColor;
-  padding: 0.5rem 0;
   margin-top: 1rem;
   color: rgba($color: #fff, $alpha: 0.6);
-  height: 16rem;
+  height: 18rem;
+  .subtitle {
+    height: 8.5rem;
+  }
+  .change {
+    width: 60%;
+    height: 2rem;
+    border-radius: 8px;
+    border: 0;
+  }
 }
 
 .delete {
   width: 100%;
   height: 3rem;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
   border: 0;
   cursor: pointer;
   background-color: $primaryRed;
