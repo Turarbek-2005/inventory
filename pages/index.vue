@@ -5,6 +5,7 @@
       <AddSlot />
       <Slots />
     </div>
+    <Frame />
   </div>
 </template>
 <style lang="scss" scoped>
