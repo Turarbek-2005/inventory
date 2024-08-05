@@ -109,6 +109,7 @@ function deleteItem(id: string | undefined) {
     height: 2rem;
     border-radius: 8px;
     border: 0;
+    cursor: pointer;
   }
 }
 

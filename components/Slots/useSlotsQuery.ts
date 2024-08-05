@@ -8,7 +8,6 @@ export function useSlotsQuery() {
     queryKey: ["objects"],
     queryFn: () => DB.listDocuments(DB_ID, COLLECTION_OBJECTS),
     select(data) {
-      console.log(data);
       const newBoard: IColumn[] = KANBAN_DATA.map((column) => ({
         ...column,
         item: null,

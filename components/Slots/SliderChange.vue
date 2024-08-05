@@ -24,7 +24,7 @@ const { mutate } = useMutation({
     await DB.updateDocument(DB_ID, COLLECTION_OBJECTS, id, formattedData);
   },
   onSuccess() {
-    console.log("Количество предметов успешно изменён!");
+    console.log("Количество предметов успешно изменёно!");
     refetch();
     storeChange.toggle();
   },
@@ -36,6 +36,7 @@ const { mutate } = useMutation({
       class="quantity"
       placeholder="Введите количество"
       v-model="quantity"
+      type="text"
     />
     <div class="buttons">
       <button class="exit" @click="storeChange.toggle()">Отмена</button>
