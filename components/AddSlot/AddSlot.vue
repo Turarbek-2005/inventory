@@ -2,6 +2,7 @@
 import { useMutation, useQuery } from "@tanstack/vue-query";
 import { uuid } from "vue-uuid";
 import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 import { COLLECTION_OBJECTS, DB_ID, STORAGE_ID } from "~/app.constants";
 import { useSlotsQuery } from "../Slots/useSlotsQuery";
 
@@ -38,13 +39,13 @@ function addPhoto(e: InputFileEvent) {
   }
 }
 
-const { mutate: createPublication } = useMutation({
-  mutationKey: ["create a new publication"],
+const { mutate: createObject } = useMutation({
+  mutationKey: ["create a new Object"],
   mutationFn: async (data) => {
     const formattedData = {
-      name: name.value,
-      description: description.value,
-      image: photo.value,
+      name: name.value ? name.value : false,
+      description: description.value ? description.value : false,
+      image: photo.value ? photo.value : false,
       slot: freeSlots[0].toString(),
       quantity: "0",
     };
@@ -66,6 +67,12 @@ const { mutate: createPublication } = useMutation({
     refetch();
     photo.value = "";
   },
+  onError() {
+    toast("Товар не удалось добавить, проверьте что все поля заполнены", {
+      theme: "auto",
+      dangerouslyHTMLString: true,
+    });
+  },
 });
 
 const { mutate: uploadImage } = useMutation({
@@ -86,13 +93,13 @@ const { mutate: uploadImage } = useMutation({
 async function create() {
   try {
     if (photo.value.length > 0) {
-      createPublication();
+      createObject();
     } else {
       console.log("No photos to upload");
     }
   } catch (error) {
     console.error(
-      "Ошибка при загрузке изображений или создании публикации:",
+      "Ошибка при загрузке изображений или создании товара:",
       error
     );
   }

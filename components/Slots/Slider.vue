@@ -3,6 +3,8 @@ import { useMutation } from "@tanstack/vue-query";
 import { COLLECTION_OBJECTS, DB_ID } from "~/app.constants";
 import { useSlotSlideStore } from "~/store/slot-slide.store";
 import { useSlideChangeStore } from "~/store/slide-change.store";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 const store = useSlotSlideStore();
 const storeChange = useSlideChangeStore();
@@ -11,7 +13,9 @@ const { mutate } = useMutation({
   mutationKey: ["move card"],
   mutationFn: (docId: string) =>
     DB.deleteDocument(DB_ID, COLLECTION_OBJECTS, docId),
-  onSuccess: () => {},
+  onSuccess: () => {
+    toast("Товар успешно удалён! ");
+  },
 });
 
 function deleteItem(id: string | undefined) {
