@@ -10,7 +10,14 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/image": "^1.7.0",
+    "@nuxtjs/google-fonts": "^3.2.0",
+    "@tanstack/vue-query": "^5.51.21",
+    "appwrite": "^15.0.0",
     "nuxt": "^3.12.4",
     "vue": "latest"
+  },
+  "devDependencies": {
+    "sass": "^1.77.8"
   }
 }
