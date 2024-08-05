@@ -15,8 +15,6 @@ const allSlots = Array.from({ length: 25 }, (_, i) => i + 1);
 
 const freeSlots = allSlots.filter((slot) => !occupiedSlots?.includes(slot));
 
-console.log(freeSlots);
-
 const photo = ref("");
 const name = ref("");
 const description = ref("");
