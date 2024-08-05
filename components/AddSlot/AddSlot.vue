@@ -23,12 +23,17 @@ interface InputFileEvent extends Event {
   target: HTMLInputElement;
 }
 
-function addPhoto(e: InputFileEvent) {
+// function addPhoto(e: InputFileEvent) {
+//   if (e.target?.files && e.target.files.length > 0) {
+//     uploadImage(e.target?.files[0]);
+//   }
+// }
+function addPhoto(event: Event) {
+  const e = event as InputFileEvent;
   if (e.target?.files && e.target.files.length > 0) {
-    uploadImage(e.target?.files[0]);
+    uploadImage(e.target.files[0]);
   }
 }
-
 const { mutate: createObject } = useMutation({
   mutationKey: ["create a new Object"],
   mutationFn: async (data) => {
@@ -99,7 +104,7 @@ async function create() {
   <div class="add">
     <div v-if="!photo" class="skeleton">Выберите фото снизу</div>
     <NuxtImg v-else class="photo" :src="photo" />
-    <input type="file" class="add__photo" :onchange="addPhoto" />
+    <input type="file" class="add__photo" @change="addPhoto" />
     <input
       type="text"
       class="name"
