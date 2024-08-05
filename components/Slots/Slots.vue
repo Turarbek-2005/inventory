@@ -2,11 +2,10 @@
 import { useMutation } from "@tanstack/vue-query";
 import { useSlotsQuery } from "./useSlotsQuery";
 import { COLLECTION_OBJECTS, DB_ID } from "~/app.constants";
-import type { EnumStatus, ICard, IColumn } from "./slots.types";
+import type { ICard, IColumn } from "./slots.types";
 
 const dragCardRef = ref<ICard | null>(null);
 const sourceColumnRef = ref<IColumn | null>(null);
-
 const { data, isLoading, refetch } = useSlotsQuery();
 type TypeMutationVaraiables = {
   docId: string;
@@ -53,6 +52,7 @@ function handleDrop(targetColumn: IColumn) {
       draggable="true"
       @dragstart="() => handleDragStart(item.item, item)"
     />
+    <SlotsSlider />
   </div>
 </template>
 <style lang="scss" scoped>
@@ -67,5 +67,6 @@ function handleDrop(targetColumn: IColumn) {
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
   overflow: hidden;
+  position: relative;
 }
 </style>

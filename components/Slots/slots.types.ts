@@ -30,6 +30,7 @@ export interface ICard {
   id: string;
   name: string;
   quantity: string;
+  description: string;
   $createdAt: string;
   slot: string;
   image: string;

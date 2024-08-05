@@ -9,5 +9,5 @@ export default defineNuxtConfig({
         Inter: [400, 500, 600, 700, 900],
       },
     },
-  ], "@nuxt/image"],
+  ], "@nuxt/image", "@nuxt/icon"],
 });

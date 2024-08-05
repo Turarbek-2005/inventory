@@ -22,6 +22,7 @@ export function useSlotsQuery() {
             $createdAt: deal.$createdAt,
             id: deal.$id,
             name: deal.name,
+            description: deal.description,
             quantity: deal.quantity,
             slot: deal.slot,
             image: deal.image,

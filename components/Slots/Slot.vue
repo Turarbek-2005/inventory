@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import type { ICard, IColumn } from "./slots.types";
+import { useSlotSlideStore } from "~/store/slot-slide.store";
+
+const store = useSlotSlideStore();
 
 const props = defineProps({
   data: Object,
@@ -8,7 +10,7 @@ const props = defineProps({
 const item = props.data?.item;
 </script>
 <template>
-  <div class="slot">
+  <div class="slot" @click="store.set(item)">
     <NuxtImg :src="item?.image" width="85" />
     <label v-if="item" class="quantity">{{ item?.quantity }}</label>
   </div>
@@ -22,6 +24,7 @@ const item = props.data?.item;
   justify-content: center;
   align-items: center;
   position: relative;
+  cursor: pointer;
 }
 
 .quantity {
