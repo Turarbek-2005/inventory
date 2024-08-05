@@ -1,22 +1,14 @@
 <script setup lang="ts">
-import { useMutation, useQuery } from "@tanstack/vue-query";
+import { useMutation } from "@tanstack/vue-query";
 import { uuid } from "vue-uuid";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import { COLLECTION_OBJECTS, DB_ID, STORAGE_ID } from "~/app.constants";
 import { useSlotsQuery } from "../Slots/useSlotsQuery";
+import { useFreeSlotsQuery } from "./useFreeSlotsQuert";
 
 const { refetch } = useSlotsQuery();
 
-function useFreeSlotsQuery() {
-  return useQuery({
-    queryKey: ["objects"],
-    queryFn: () => DB.listDocuments(DB_ID, COLLECTION_OBJECTS),
-    select(data) {
-      return data.documents;
-    },
-  });
-}
 const Slots = useFreeSlotsQuery();
 const occupiedSlots = Slots.data.value?.map((item) => parseInt(item.slot));
 const allSlots = Array.from({ length: 25 }, (_, i) => i + 1);
@@ -35,7 +27,7 @@ interface InputFileEvent extends Event {
 
 function addPhoto(e: InputFileEvent) {
   if (e.target?.files && e.target.files.length > 0) {
-    uploadImage(e.target.files[0]);
+    uploadImage(e.target?.files[0]);
   }
 }
 
