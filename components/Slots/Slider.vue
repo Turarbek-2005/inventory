@@ -36,7 +36,11 @@ function deleteItem(id: string | undefined) {
         @click="store.toggle()"
       />
       <div class="img">
-        <NuxtImg :src="store.card?.image" class="image" />
+        <NuxtImg
+          v-if="store.card?.image"
+          :src="store.card?.image"
+          class="image"
+        />
       </div>
       <div class="text">
         <h3 class="title">{{ store.card?.name }}</h3>
@@ -62,7 +66,7 @@ function deleteItem(id: string | undefined) {
   width: 45%;
   background: $bgColor;
   border: 1px solid $borderColor;
-  transition: right 0.3s ease-in-out;
+  transition: 0.3s;
   right: -45%;
 }
 

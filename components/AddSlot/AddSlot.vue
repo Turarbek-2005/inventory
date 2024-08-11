@@ -23,11 +23,6 @@ interface InputFileEvent extends Event {
   target: HTMLInputElement;
 }
 
-// function addPhoto(e: InputFileEvent) {
-//   if (e.target?.files && e.target.files.length > 0) {
-//     uploadImage(e.target?.files[0]);
-//   }
-// }
 function addPhoto(event: Event) {
   const e = event as InputFileEvent;
   if (e.target?.files && e.target.files.length > 0) {

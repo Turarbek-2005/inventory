@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/vue-query";
 import { COLLECTION_OBJECTS, DB_ID } from "~/app.constants";
 import { KANBAN_DATA } from "./slots.data";
-import type { IColumn, ICard } from "./slots.types";
+import type { IColumn } from "./slots.types";
 
 export function useSlotsQuery() {
   return useQuery({
     queryKey: ["objects"],
-    queryFn: () => DB.listDocuments(DB_ID, COLLECTION_OBJECTS),
+    queryFn: async () => await DB.listDocuments(DB_ID, COLLECTION_OBJECTS),
     select(data) {
       const newBoard: IColumn[] = KANBAN_DATA.map((column) => ({
         ...column,

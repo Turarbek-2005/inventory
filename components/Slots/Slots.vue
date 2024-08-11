@@ -7,6 +7,9 @@ import type { ICard, IColumn } from "./slots.types";
 const dragCardRef = ref<ICard | null>(null);
 const sourceColumnRef = ref<IColumn | null>(null);
 const { data, isLoading, refetch } = useSlotsQuery();
+watch(data, (newValue) => {
+  console.log("Данные обновились:", newValue);
+});
 type TypeMutationVaraiables = {
   docId: string;
   slot?: string;
@@ -18,13 +21,15 @@ const { mutate } = useMutation({
     await DB.updateDocument(DB_ID, COLLECTION_OBJECTS, docId, {
       slot,
     }),
-  onSuccess: () => {
-    refetch();
+  onSuccess: async () => {
+    await refetch();
+    console.log("Данные обновлены после refetch:", data.value);
   },
   onError: (error) => {
     console.log(error);
   },
 });
+
 function handleDragStart(card: ICard | null, column: IColumn) {
   dragCardRef.value = card;
   sourceColumnRef.value = column;
@@ -42,15 +47,15 @@ function handleDrop(targetColumn: IColumn) {
 </script>
 <template>
   <div class="slots">
-    <SlotsSlot v-if="!data" v-for="item of 25" />
+    <div v-if="isLoading" class="loading">Loading...</div>
     <SlotsSlot
-      v-for="item of data"
-      :data="item"
-      :key="item.id"
+      v-for="(slot, index) of data"
+      :data="slot"
+      :key="index"
       @dragover="handleDragOver"
-      @drop="() => handleDrop(item)"
+      @drop="() => handleDrop(slot)"
       draggable="true"
-      @dragstart="() => handleDragStart(item.item, item)"
+      @dragstart="() => handleDragStart(slot.item, slot)"
     />
     <SlotsSlider />
   </div>
@@ -68,5 +73,9 @@ function handleDrop(targetColumn: IColumn) {
   grid-template-rows: repeat(5, 1fr);
   overflow: hidden;
   position: relative;
+}
+
+.loading {
+  margin: 1rem;
 }
 </style>
